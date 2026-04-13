@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { LucideIcon } from "lucide-react"
 import { 
   Calendar, 
@@ -18,6 +17,7 @@ export interface NavItem {
 export interface NavSubItem {
   title: string
   url: string
+  isLogout?: boolean
 }
 
 export const navigationData: NavItem[] = [
@@ -63,6 +63,7 @@ export const navigationData: NavItem[] = [
       { title: "Tema", url: "/settings/theme" },
       { title: "Privacidade", url: "/settings/privacy" },
       { title: "Sobre", url: "/settings/about" },
+      { title: "Sair", url: "/", isLogout: true },
     ],
   },
 ]

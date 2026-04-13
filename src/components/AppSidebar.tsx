@@ -1,10 +1,6 @@
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { 
-  Calendar, 
-  CheckSquare, 
-  Wallet, 
-  Settings,
   ChevronRight,
   ChevronDown,
   List,
@@ -37,7 +33,13 @@ export function AppSidebar() {
 
   const handleItemClick = (item: typeof navigationData[0]) => {
     if (item.items && item.items.length > 0) {
-      toggleExpand(item.url)
+      if (isCollapsed) {
+        // Se estiver colapsado, navega para o primeiro subitem
+        navigate(item.items[0].url)
+      } else {
+        // Se estiver expandido, expande/contrai o menu
+        toggleExpand(item.url)
+      }
     } else {
       navigate(item.url)
     }
@@ -98,9 +100,11 @@ export function AppSidebar() {
                       key={subItem.url}
                       onClick={() => navigate(subItem.url)}
                       className={`w-full text-left p-2 rounded-lg border-2 border-black text-sm transition-all ${
-                        location.pathname === subItem.url
-                          ? "bg-[hsl(45,100%,50%)] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-                          : "bg-white hover:bg-[hsl(45,100%,50%)]"
+                        subItem.isLogout
+                          ? "bg-red-500 hover:bg-red-600 text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                          : location.pathname === subItem.url
+                            ? "bg-[hsl(45,100%,50%)] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                            : "bg-white hover:bg-[hsl(45,100%,50%)]"
                       }`}
                     >
                       {subItem.title}
